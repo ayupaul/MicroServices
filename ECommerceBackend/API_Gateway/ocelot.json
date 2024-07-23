@@ -1,0 +1,119 @@
+{
+  "GlobalConfiguration": {
+    "UseServiceDiscovery": true
+   
+  },
+  "Routes": [
+    {
+      //product routes for post request
+      "UpstreamPathTemplate": "/api/productAPIService",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamPathTemplate": "/api/Product",
+      "DownstreamScheme": "http",
+      "UseServiceDiscovery": true,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "Role": "admin"
+      },
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "productapi",
+          "Port": 80
+        }
+      ]
+    },
+    {
+      //product routes for get request
+      "UpstreamPathTemplate": "/api/productAPIService",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/Product",
+      "DownstreamScheme": "http",
+      "UseServiceDiscovery": true,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "productapi",
+          "Port": 80
+        }
+      ]
+    },
+    {
+      //product route for get by id request
+      "UpstreamPathTemplate": "/api/productAPIService/{id}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/Product/{id}",
+      "UseServiceDiscovery": true,
+      "DownstreamScheme": "http",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "productapi",
+          "Port": 80
+        }
+      ]
+    },
+    {
+      //product route for delete request
+      "UpstreamPathTemplate": "/api/productAPIService/{id}",
+      "UpstreamHttpMethod": [ "Delete" ],
+      "DownstreamPathTemplate": "/api/Product/{id}",
+      "UseServiceDiscovery": true,
+      "DownstreamScheme": "http",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "Role": "admin"
+      },
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "productapi",
+          "Port": 80
+        }
+      ]
+    },
+    {
+      //user route for login
+      "UpstreamPathTemplate": "/api/UserAPIService",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamPathTemplate": "/api/Account",
+      "UseServiceDiscovery": true,
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "userapi",
+          "Port": 80
+        }
+      ]
+    },
+    {
+      //cart route for get and post request
+      "UpstreamPathTemplate": "/api/CartAPIService",
+      "UpstreamHttpMethod": [ "Post", "Get" ],
+      "DownstreamPathTemplate": "/api/Cart",
+      "UseServiceDiscovery": true,
+      "DownstreamScheme": "http",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "cartapi",
+          "Port": 80
+        }
+      ]
+    }
+  ]
+}

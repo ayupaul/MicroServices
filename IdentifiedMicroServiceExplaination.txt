@@ -1,0 +1,12 @@
+Identified microservices for above use case-
+
+1. Why are we using microservices for ecommerce application because microservices offers loose coupling which leads to performance increase and low fault tolerance as one service doesn't depends upon other service or vice-versa.
+
+2. The identified microservices are taken with a reason and that reason is bounded context logic,therefore identified microservices are-
+			   - ProductAPIService- It handler all the product operations like CRUD operation of 							product.
+
+			   - UserAPIService-    It handles all the authentication and authorization operations such 				                as login and authentication.
+
+			   - CartAPIService-    It handles cart operations such add to cart, get cart details and
+                                                the product verfication whether the product is present or not is 
+                                                handled by the inner communication between cart and product services 						using RabbitMQ Request-Response Pattern.

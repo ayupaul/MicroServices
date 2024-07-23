@@ -1,0 +1,67 @@
+version: '3.4'
+
+networks:
+    backend:
+services:
+  productapiservice:
+    container_name: productapiservice
+    image: ayush900/productapiservice:latest
+    hostname: productapi
+    networks:
+        - backend
+    depends_on:
+    - "eureka-server"
+    - "rabbitmq"
+
+  userapiservice:
+    container_name: userapiservice
+    image: ayush900/userapiservice:latest
+    hostname: userapi
+    networks:
+    - backend
+    depends_on:
+      - "rabbitmq"
+      - "eureka-server"
+
+
+
+  api_gateway:
+    container_name: apigateway
+    image: ayush900/apigateway:latest
+    hostname: api
+    networks:
+    - backend
+    ports:
+    - "8080:80"
+    depends_on:
+    - "eureka-server"
+ 
+  eureka-server:
+      container_name: eureka
+      image: steeltoeoss/eurekaserver:latest
+      hostname: eureka
+      networks:
+      - backend
+      ports:
+      - "8761:8761" 
+     
+  cartapiservice:
+    container_name: cartapiservice
+    image: ayush900/cartapiservice:latest
+    hostname: cartapi
+    networks:
+    - backend
+    depends_on:
+      - "rabbitmq"
+      - "eureka-server"
+  
+  rabbitmq:
+    container_name: "myrabbit"
+    image: rabbitmq:3-management
+    hostname: rabbitmq
+    networks:
+    - backend
+    ports:
+        - '5672:5672'
+        - '15672:15672'
+

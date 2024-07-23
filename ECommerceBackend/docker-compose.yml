@@ -1,0 +1,79 @@
+version: '3.4'
+
+networks:
+    backend:
+services:
+  productapiservice:
+    container_name: productapiservice
+    image: ${DOCKER_REGISTRY-}productapiservice
+    hostname: productapi
+    build:
+      context: .
+      dockerfile: ProductAPIService/Dockerfile
+    networks:
+        - backend
+    depends_on:
+    - "eureka-server"
+    - "rabbitmq"
+
+  userapiservice:
+    container_name: userapiservice
+    image: ${DOCKER_REGISTRY-}userapiservice
+    hostname: userapi
+    build:
+      context: .
+      dockerfile: UserAPIService/Dockerfile
+    networks:
+    - backend
+    depends_on:
+      - "rabbitmq"
+      - "eureka-server"
+
+
+
+  api_gateway:
+    container_name: apigateway
+    image: ${DOCKER_REGISTRY-}apigateway
+    hostname: api
+    build:
+      context: .
+      dockerfile: API_Gateway/Dockerfile
+    networks:
+    - backend
+    ports:
+    - "8080:80"
+    depends_on:
+    - "eureka-server"
+ 
+  eureka-server:
+      container_name: eureka
+      image: steeltoeoss/eurekaserver:latest
+      hostname: eureka
+      networks:
+      - backend
+      ports:
+      - "8761:8761" 
+     
+  cartapiservice:
+    container_name: cartapiservice
+    image: ${DOCKER_REGISTRY-}cartapiservice
+    hostname: cartapi
+    build:
+      context: .
+      dockerfile: CartAPIService/Dockerfile
+    networks:
+    - backend
+    depends_on:
+      - "rabbitmq"
+      - "eureka-server"
+  
+  rabbitmq:
+    container_name: "myrabbit"
+    image: rabbitmq:3-management
+    hostname: rabbitmq
+    networks:
+    - backend
+    ports:
+        - '5672:5672'
+        - '15672:15672'
+
